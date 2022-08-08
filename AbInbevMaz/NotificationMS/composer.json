@@ -1,0 +1,30 @@
+{
+    "name": "ab-inbev-maz/notifications-ms",
+    "description": "Notifications Microservice",
+    "keywords": [],
+    "license": "",
+    "authors": [
+        {
+            "name": "Ab Inbev Maz",
+            "homepage": ""
+        }
+    ],
+    "require": {
+        "php": ">=7",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "AbInbevMaz\\NotificationMS\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
+
