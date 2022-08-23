@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=7",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": ">=6.3"
     },
     "autoload": {
         "psr-4": {
@@ -24,7 +24,10 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+     "bearer": {
+        "https://vercel.com/gre4t/satis":"testPruebaToken"
+    }
 }
 
 
