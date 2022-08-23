@@ -24,10 +24,7 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-     "bearer": {
-        "https://vercel.com/gre4t/satis":"testPruebaToken"
-    }
+    "prefer-stable": true
 }
 
 
