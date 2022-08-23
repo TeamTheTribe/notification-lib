@@ -1,11 +1,11 @@
 {
-    "name": "ab-inbev-maz/notifications-ms",
+    "name": "the-tribe/notifications-ms",
     "description": "Notifications Microservice",
     "keywords": [],
     "license": "",
     "authors": [
         {
-            "name": "Ab Inbev Maz",
+            "name": "The Tribe",
             "homepage": ""
         }
     ],
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "AbInbevMaz\\NotificationMS\\": "src/"
+            "TheTribe\\NotificationMS\\": "src/"
         }
     },
     "extra": {

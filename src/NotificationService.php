@@ -1,6 +1,6 @@
 <?php
 
-namespace AbInbevMaz\NotificationMS;
+namespace TheTribe\NotificationMS;
 
 use GuzzleHttp\Client;
 
