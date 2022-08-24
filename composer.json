@@ -5,8 +5,7 @@
     "license": "",
     "authors": [
         {
-            "name": "The Tribe",
-            "homepage": ""
+            "name": "The Tribe"
         }
     ],
     "require": {
