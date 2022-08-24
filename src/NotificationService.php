@@ -12,12 +12,27 @@ final class NotificationService
 
     public function __construct(string $appURL, string $notificationURL)
     {
+        $this->client = new Client();
         $this->appURL = $appURL;
         $this->notificationURL = $notificationURL;
-        $this->client = new Client();
     }
 
-    public function save(array $content, array $params, string $action, int $categoryId, ?string $groupId = NULL)
+    public function getNotifications(string $sharpId)
+    {
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+
+        return $this->client->request('GET', $this->notificationURL."/".$sharpId, [
+            'headers' => $headers
+        ]);
+    }
+
+    public function save(array $content, 
+                        array $params, 
+                        string $action, 
+                        int $categoryId, 
+                        ?string $groupId = NULL)
     {
         $headers = [
             'Content-Type' => 'application/json',
@@ -33,17 +48,34 @@ final class NotificationService
             'group_id' => $groupId,
         ];
 
-        $response = $this->client->request('PUT', $this->notificationURL, [
+        return $this->client->request('PUT', $this->notificationURL, [
             'headers' => $headers,
             'body' => json_encode($body)
         ]);
+    }
 
-
-
-        return [
-            'code' => $response->getStatusCode(),
-            'body' => $response->getBody()
+    public function readNotification(string $notificationId, string $sharpId)
+    {
+        $headers = [
+            'Content-Type' => 'application/json'
         ];
+
+        return $this->client->request('PUT', $this->notificationURL."/".$notificationId, [
+            'headers' => $headers,
+            'body' => ["sharp_id" => $sharpId]
+        ]);
+    }
+
+    public function deleteNotification(string $notificationId, string $sharpId)
+    {
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+
+        return $this->client->request("DELETE", $this->notificationURL."/".$notificationId, [
+            'headers' => $headers,
+            'body' => ["sharp_id" => $sharpId]
+        ]);
     }
 
 }
