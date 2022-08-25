@@ -5,5 +5,6 @@ return [
         "develop" => "http://msnotifications.dev",
         "stage" => "http://msnotifications.stage",
         "production" => "http://msnotifications"
-    ]
+    ],
+    "middleware" => "web"
 ];
