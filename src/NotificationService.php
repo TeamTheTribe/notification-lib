@@ -3,7 +3,7 @@
 namespace TheTribe\NotificationMS;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\BadResponseException;
 
 final class NotificationService
 {
@@ -28,7 +28,7 @@ final class NotificationService
             return $this->client->request('GET', $this->notificationURL."/".$sharpId, [
                 'headers' => $headers
             ]);
-        } catch (RequestException $th) {
+        } catch (BadResponseException $th) {
             return $th->getResponse();
         }
         
@@ -59,7 +59,7 @@ final class NotificationService
                 'headers' => $headers,
                 'body' => json_encode($body)
             ]);
-        } catch (RequestException $th) {
+        } catch (BadResponseException $th) {
             return $th->getResponse();
         }
     }
@@ -75,7 +75,7 @@ final class NotificationService
                 'headers' => $headers,
                 'body' => ["sharp_id" => $sharpId]
             ]);
-        } catch (RequestException $th) {
+        } catch (BadResponseException $th) {
             return $th->getResponse();
         }
         
@@ -92,7 +92,7 @@ final class NotificationService
                 'headers' => $headers,
                 'body' => ["sharp_id" => $sharpId]
             ]);
-        } catch (RequestException $th) {
+        } catch (BadResponseException $th) {
             return $th->getResponse();
         }
         
