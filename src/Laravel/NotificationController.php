@@ -5,14 +5,17 @@ namespace TheTribe\NotificationMS\Laravel;
 use Exception;
 use Illuminate\Http\Request;
 use TheTribe\NotificationMS\NotificationService;
+use Illuminate\Routing\Controller;
 
-final class NotificationController
+
+final class NotificationController extends Controller
 {
     protected $notificationService;
 
     public function __construct(NotificationService $notificationService)
     {
         $this->notificationService = $notificationService;
+        $this->middleware(config("notifications.middleware"));
     }
 
     public function getNotifications(Request $request)

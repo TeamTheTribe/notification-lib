@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use TheTribe\NotificationMS\Laravel\NotificationController;
 
-Route::group(["prefix" => "api", "middleware" => ["web"]], function(){
-    Route::group(["prefix" => "notifications"], function(){
+Route::group(["prefix" => "api"], function(){
+    Route::group(["prefix" => "notifications-ms"], function(){
     Route::get('/', [NotificationController::class, "getNotifications"])
         ->name('api.v1_0.notifications.get');
     Route::put('/', [NotificationController::class, "save"])

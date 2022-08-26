@@ -3,6 +3,7 @@
 namespace TheTribe\NotificationMS;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 
 final class NotificationService
 {
@@ -19,13 +20,18 @@ final class NotificationService
 
     public function getNotifications(string $sharpId)
     {
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
-
-        return $this->client->request('GET', $this->notificationURL."/".$sharpId, [
-            'headers' => $headers
-        ]);
+        try {
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
+    
+            return $this->client->request('GET', $this->notificationURL."/".$sharpId, [
+                'headers' => $headers
+            ]);
+        } catch (BadResponseException $th) {
+            return $th->getResponse();
+        }
+        
     }
 
     public function save(array $content, 
@@ -34,48 +40,62 @@ final class NotificationService
                         int $categoryId, 
                         ?string $groupId = NULL)
     {
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Referer' => str_replace(['http://', 'https://'], '',  $this->appURL),
-            'Host' =>  str_replace(['http://', 'https://'], '', $this->appURL)
-        ];
-
-        $body = [
-            'content' => json_encode($content),
-            'params' => json_encode($params),
-            'action' => $action,
-            'category_id' => $categoryId,
-            'group_id' => $groupId,
-        ];
-
-        return $this->client->request('PUT', $this->notificationURL, [
-            'headers' => $headers,
-            'body' => json_encode($body)
-        ]);
+        try {
+            $headers = [
+                'Content-Type' => 'application/json',
+                'Referer' => str_replace(['http://', 'https://'], '',  $this->appURL),
+                'Host' =>  str_replace(['http://', 'https://'], '', $this->appURL)
+            ];
+    
+            $body = [
+                'content' => json_encode($content),
+                'params' => json_encode($params),
+                'action' => $action,
+                'category_id' => $categoryId,
+                'group_id' => $groupId,
+            ];
+    
+            return $this->client->request('PUT', $this->notificationURL, [
+                'headers' => $headers,
+                'body' => json_encode($body)
+            ]);
+        } catch (BadResponseException $th) {
+            return $th->getResponse();
+        }
     }
 
     public function readNotification(string $notificationId, string $sharpId)
     {
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
-
-        return $this->client->request('PUT', $this->notificationURL."/".$notificationId, [
-            'headers' => $headers,
-            'body' => ["sharp_id" => $sharpId]
-        ]);
+        try {
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
+    
+            return $this->client->request('PUT', $this->notificationURL."/".$notificationId, [
+                'headers' => $headers,
+                'body' => ["sharp_id" => $sharpId]
+            ]);
+        } catch (BadResponseException $th) {
+            return $th->getResponse();
+        }
+        
     }
 
     public function deleteNotification(string $notificationId, string $sharpId)
     {
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
-
-        return $this->client->request("DELETE", $this->notificationURL."/".$notificationId, [
-            'headers' => $headers,
-            'body' => ["sharp_id" => $sharpId]
-        ]);
+        try {
+            $headers = [
+                'Content-Type' => 'application/json'
+            ];
+    
+            return $this->client->request("DELETE", $this->notificationURL."/".$notificationId, [
+                'headers' => $headers,
+                'body' => ["sharp_id" => $sharpId]
+            ]);
+        } catch (BadResponseException $th) {
+            return $th->getResponse();
+        }
+        
     }
 
 }
