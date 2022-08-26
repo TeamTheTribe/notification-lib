@@ -6,5 +6,7 @@ return [
         "stage" => "http://msnotifications.stage",
         "production" => "http://msnotifications"
     ],
-    "middleware" => "web"
+    "middleware" => [
+        "web"
+    ]
 ];
