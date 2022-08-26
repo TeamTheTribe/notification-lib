@@ -17,7 +17,7 @@ Version 0.8.6
 # Pasos de instalacion Laravel
 1. Ejecutar el siguiente comando para hacer la publicacion del servicio
 ```
-php artisan vendor:publish --provider="TheTribe\\NotificationMS\\Laravel\\ServiceProvider"
+php artisan vendor:publish --provider="TheTribe\NotificationMS\Laravel\ServiceProvider"
 ```
 2. Modificar el archivo notifications.php ubicado el la ruta path/config/notifications.php.
 ```
