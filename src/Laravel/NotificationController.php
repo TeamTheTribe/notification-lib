@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use TheTribe\NotificationMS\NotificationService;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 
 final class NotificationController extends Controller
@@ -15,7 +17,7 @@ final class NotificationController extends Controller
     public function __construct(NotificationService $notificationService)
     {
         $this->notificationService = $notificationService;
-        $this->middleware(config("notifications.middleware"));
+        $this->middleware(config("notifications.middleware"))->except('getResourceNotification');
     }
 
     public function getNotifications(Request $request)
@@ -58,5 +60,25 @@ final class NotificationController extends Controller
         }
         $response = $this->notificationService->deleteNotification($notificationId, $sharpId);
         return response()->json($response->getBody(), $response->getStatusCode());
+    }
+
+    public function getResourceNotification(){
+
+        $response = $this->notificationService->getResource();
+        if( $response instanceof \Throwable){
+            Log::error(
+                'Getting notification.js resource',
+                [
+                    'method'    => __METHOD__,
+                    'class'     => $response->getFile(),
+                    'line'      => $response->getLine(),
+                    'message'   => $response->getMessage(),
+                    'trace'     => $response->getTraceAsString(),
+                ]
+            );
+            $response = '';
+        }
+
+        return new Response($response);
     }
 }
