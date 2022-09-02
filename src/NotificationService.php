@@ -4,6 +4,7 @@ namespace TheTribe\NotificationMS;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
+use Throwable;
 
 final class NotificationService
 {
@@ -96,6 +97,22 @@ final class NotificationService
             return $th->getResponse();
         }
         
+    }
+
+    public function getResource()
+    {
+        $file = $this->notificationURL .'/js/notifications.js';
+
+        try{
+            header('Contet-Type: text/javascript');
+            header('Content-type: text/js;');
+            header("Pragma: no-cache");
+            header("Expires: 0");
+            readfile($file);
+            exit;
+        }catch(Throwable $th){
+            return $th;
+        }
     }
 
 }
