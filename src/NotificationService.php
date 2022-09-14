@@ -10,6 +10,7 @@ final class NotificationService
 {
     private $appURL;
     private $notificationURL;
+    private $endPoint;
     protected $client;
 
     public function __construct(string $appURL, string $notificationURL)
@@ -17,6 +18,7 @@ final class NotificationService
         $this->client = new Client();
         $this->appURL = $appURL;
         $this->notificationURL = $notificationURL;
+        $this->endPoint = $notificationURL . '/api/notifications';
     }
 
     public function getNotifications(string $sharpId)
@@ -26,7 +28,7 @@ final class NotificationService
                 'Content-Type' => 'application/json'
             ];
     
-            return $this->client->request('GET', $this->notificationURL."/".$sharpId, [
+            return $this->client->request('GET', $this->endPoint."/".$sharpId, [
                 'headers' => $headers
             ]);
         } catch (BadResponseException $th) {
@@ -56,7 +58,7 @@ final class NotificationService
                 'group_id' => $groupId,
             ];
     
-            return $this->client->request('PUT', $this->notificationURL, [
+            return $this->client->request('PUT', $this->endPoint, [
                 'headers' => $headers,
                 'body' => json_encode($body)
             ]);
@@ -72,7 +74,7 @@ final class NotificationService
                 'Content-Type' => 'application/json'
             ];
     
-            return $this->client->request('PUT', $this->notificationURL."/".$notificationId, [
+            return $this->client->request('PUT', $this->endPoint."/".$notificationId, [
                 'headers' => $headers,
                 'body' => ["sharp_id" => $sharpId]
             ]);
@@ -89,7 +91,7 @@ final class NotificationService
                 'Content-Type' => 'application/json'
             ];
     
-            return $this->client->request("DELETE", $this->notificationURL."/".$notificationId, [
+            return $this->client->request("DELETE", $this->endPoint."/".$notificationId, [
                 'headers' => $headers,
                 'body' => ["sharp_id" => $sharpId]
             ]);
