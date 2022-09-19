@@ -106,8 +106,7 @@ final class NotificationService
         $file = $this->notificationURL .'/js/notifications.js';
 
         try{
-            header('Contet-Type: text/javascript');
-            header('Content-type: text/js;');
+            header('Content-Type: text/javascript');
             header("Pragma: no-cache");
             header("Expires: 0");
             readfile($file);
