@@ -5,7 +5,7 @@ use TheTribe\NotificationMS\Laravel\NotificationController;
 
 Route::group(["prefix" => "api"], function () {
     Route::group(["prefix" => "notifications-ms"], function () {
-        Route::get('/resource', [NotificationController::class, "getResourceNotification"])
+        Route::get('/notifications.js', [NotificationController::class, "getResourceNotification"])
             ->name('api.v1_0.notifications.resource.get');
         Route::get('/', [NotificationController::class, "getNotifications"])
             ->name('api.v1_0.notifications.get');
