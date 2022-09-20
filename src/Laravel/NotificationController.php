@@ -27,7 +27,10 @@ final class NotificationController extends Controller
             throw new Exception("No existe la variable de session sharp_id");
         }
         $response = $this->notificationService->getNotifications($sharpId);
-        return response()->json($response->getBody(), $response->getStatusCode());
+        return response()->json(
+            json_decode($response->getBody()->getContents()), 
+            $response->getStatusCode()
+        );
     }
 
     public function save(Request $request)
@@ -39,7 +42,10 @@ final class NotificationController extends Controller
             $request->get("category_id"),
             $request->get("group_id")
         );
-        return response()->json($response->getBody(), $response->getStatusCode());
+        return response()->json(
+            json_decode($response->getBody()->getContents()), 
+            $response->getStatusCode()
+        );
     }
 
     public function readNotification(Request $request, $notificationId)
@@ -49,7 +55,10 @@ final class NotificationController extends Controller
             throw new Exception("No existe la variable de session sharp_id");
         }
         $response = $this->notificationService->readNotification($notificationId, $sharpId);
-        return response()->json($response->getBody(), $response->getStatusCode());
+        return response()->json(
+            json_decode($response->getBody()->getContents()), 
+            $response->getStatusCode()
+        );
     }
 
     public function deleteNotification(Request $request, $notificationId)
@@ -59,7 +68,10 @@ final class NotificationController extends Controller
             throw new Exception("No existe la variable de session sharp_id");
         }
         $response = $this->notificationService->deleteNotification($notificationId, $sharpId);
-        return response()->json($response->getBody(), $response->getStatusCode());
+        return response()->json(
+            json_decode($response->getBody()->getContents()), 
+            $response->getStatusCode()
+        );
     }
 
     public function getResourceNotification(){
