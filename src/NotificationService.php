@@ -76,7 +76,7 @@ final class NotificationService
     
             return $this->client->request('PUT', $this->endPoint."/".$notificationId, [
                 'headers' => $headers,
-                'body' => ["sharp_id" => $sharpId]
+                'form_params' => ["sharp_id" => $sharpId]
             ]);
         } catch (BadResponseException $th) {
             return $th->getResponse();
@@ -93,7 +93,7 @@ final class NotificationService
     
             return $this->client->request("DELETE", $this->endPoint."/".$notificationId, [
                 'headers' => $headers,
-                'body' => ["sharp_id" => $sharpId]
+                'form_params' => ["sharp_id" => $sharpId]
             ]);
         } catch (BadResponseException $th) {
             return $th->getResponse();
