@@ -1,0 +1,6 @@
+name: 'The Tribe Notifications MS'
+description: 'Library for micro service integration'
+type: module
+author: The Tribe
+core: 8.x #The core: is required here because Drupal Core versions before 8.7.7 do not recognize the core_version_requirement: key.
+core_version_requirement : ^8 || ^9
