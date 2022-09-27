@@ -1,6 +1,7 @@
 {
     "name": "the-tribe/notifications-ms",
     "description": "Notifications Microservice",
+    "type": "drupal-module",
     "keywords": [],
     "license": "",
     "authors": [
