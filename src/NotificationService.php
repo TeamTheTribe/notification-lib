@@ -21,14 +21,14 @@ final class NotificationService
         $this->endPoint = $notificationURL . '/api/notifications';
     }
 
-    public function getNotifications(string $sharpId)
+    public function getNotifications(string $sharpId, int $page = 1)
     {
         try {
             $headers = [
                 'Content-Type' => 'application/json'
             ];
     
-            return $this->client->request('GET', $this->endPoint."/".$sharpId, [
+            return $this->client->request('GET', "$this->endPoint/$sharpId?page=$page", [
                 'headers' => $headers
             ]);
         } catch (BadResponseException $th) {
