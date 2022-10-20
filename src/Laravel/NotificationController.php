@@ -26,7 +26,7 @@ final class NotificationController extends Controller
         if(is_null($sharpId)){
             throw new Exception("No existe la variable de session sharp_id");
         }
-        $response = $this->notificationService->getNotifications($sharpId);
+        $response = $this->notificationService->getNotifications($sharpId, $request->query("page", 1));
         return response()->json(
             json_decode($response->getBody()->getContents()), 
             $response->getStatusCode()
