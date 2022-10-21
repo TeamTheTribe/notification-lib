@@ -24,13 +24,7 @@ final class ServiceProvider extends LaravelServiceProvider
 
     protected function getNotificationsUrl(): string
     {
-        switch (config("app.env")) {
-            case 'develop':
-                return config("notifications.url.develop");
-            case 'stage':
-                return config("notifications.url.stage");
-            default:
-                return config("notifications.url.production");
-        }
+        $env = config('app.env');
+        return config("notifications.url.{$env}");
     }
 }
