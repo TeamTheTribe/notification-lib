@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
-
 final class NotificationController extends Controller
 {
     protected $notificationService;
@@ -22,7 +21,7 @@ final class NotificationController extends Controller
 
     public function getNotifications(Request $request)
     {
-        $sharpId = $request->session()->get("sharp_id");
+        $sharpId = $this->getIdentifierSharp($request);        
         if(is_null($sharpId)){
             throw new Exception("No existe la variable de session sharp_id");
         }
@@ -50,7 +49,7 @@ final class NotificationController extends Controller
 
     public function readNotification(Request $request, $notificationId)
     {
-        $sharpId = $request->session()->get("sharp_id");
+        $sharpId = $this->getIdentifierSharp($request);
         if(is_null($sharpId)){
             throw new Exception("No existe la variable de session sharp_id");
         }
@@ -63,7 +62,7 @@ final class NotificationController extends Controller
 
     public function deleteNotification(Request $request, $notificationId)
     {
-        $sharpId = $request->session()->get("sharp_id");
+        $sharpId = $this->getIdentifierSharp($request);
         if(is_null($sharpId)){
             throw new Exception("No existe la variable de session sharp_id");
         }
@@ -75,7 +74,6 @@ final class NotificationController extends Controller
     }
 
     public function getResourceNotification(){
-
         $response = $this->notificationService->getResource();
         if( $response instanceof \Throwable){
             Log::error(
@@ -90,7 +88,21 @@ final class NotificationController extends Controller
             );
             $response = '';
         }
-
         return new Response($response);
+    }
+
+    public function getIdentifierSharp(Request $request){
+        $conf = config("notifications.callback");
+        if($conf['get_sharp']) {
+            if(class_exists($conf['get_sharp'])){
+                $configClass = new $conf['get_sharp']($request);
+                if(method_exists($configClass, 'getGlobalId')){
+                    return $configClass->getGlobalId();
+                } else {                    
+                    throw new Exception("The class " . $conf['get_sharp'] . " should implement getGlobalId() method");                    
+                }
+            }
+        }
+        return $request->session()->get("sharp_id");
     }
 }

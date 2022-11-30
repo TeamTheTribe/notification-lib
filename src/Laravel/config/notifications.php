@@ -9,5 +9,8 @@ return [
     ],
     "middleware" => [
         "web"
+    ],
+    "callback" => [
+        "get_sharp" => null
     ]
 ];
