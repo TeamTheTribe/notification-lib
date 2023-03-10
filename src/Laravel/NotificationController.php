@@ -8,14 +8,20 @@ use TheTribe\NotificationMS\NotificationService;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use TheTribe\NotificationMS\Laravel\Contracts\IdentifierGetter;
 
 final class NotificationController extends Controller
 {
     protected $notificationService;
+    protected $identifierGetter;
 
-    public function __construct(NotificationService $notificationService)
+    public function __construct(
+        NotificationService $notificationService,
+        IdentifierGetter $identifierGetter
+    )
     {
         $this->notificationService = $notificationService;
+        $this->identifierGetter = $identifierGetter;
         $this->middleware(config("notifications.middleware"))->except('getResourceNotification');
     }
 
@@ -92,17 +98,9 @@ final class NotificationController extends Controller
     }
 
     public function getIdentifierSharp(Request $request){
-        $conf = config("notifications.callback");
-        if($conf['get_sharp']) {
-            if(class_exists($conf['get_sharp'])){
-                $configClass = new $conf['get_sharp']($request);
-                if(method_exists($configClass, 'getGlobalId')){
-                    return $configClass->getGlobalId();
-                } else {                    
-                    throw new Exception("The class " . $conf['get_sharp'] . " should implement getGlobalId() method");                    
-                }
-            }
+        if(is_null($this->identifierGetter)){
+            throw new Exception("There is no implementation for identifier getter");
         }
-        return $request->session()->get("sharp_id");
+        return $this->identifierGetter->get();
     }
 }

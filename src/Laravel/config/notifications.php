@@ -10,7 +10,5 @@ return [
     "middleware" => [
         "web"
     ],
-    "callback" => [
-        "get_sharp" => null
-    ]
+    "identifier_implementation" => null
 ];
