@@ -81,20 +81,11 @@ final class NotificationController extends Controller
 
     public function getResourceNotification(){
         $response = $this->notificationService->getResource();
-        if( $response instanceof \Throwable){
-            Log::error(
-                'Getting notification.js resource',
-                [
-                    'method'    => __METHOD__,
-                    'class'     => $response->getFile(),
-                    'line'      => $response->getLine(),
-                    'message'   => $response->getMessage(),
-                    'trace'     => $response->getTraceAsString(),
-                ]
-            );
-            $response = '';
-        }
-        return new Response($response);
+        return new Response($response, 200, [
+            "Content-Type" => "text/javascript",
+            "Pragma" => "no-cache",
+            "Expires" => "0"
+        ]);
     }
 
     public function getIdentifierSharp(Request $request){

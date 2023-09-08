@@ -103,17 +103,19 @@ final class NotificationService
 
     public function getResource()
     {
-        $file = $this->notificationURL .'/js/notifications.js';
-
-        try{
-            header('Content-Type: text/javascript');
-            header("Pragma: no-cache");
-            header("Expires: 0");
-            readfile($file);
-            exit;
-        }catch(Throwable $th){
-            return $th;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->notificationURL .'/js/notifications.js');
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        $content = curl_exec($ch);
+        if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
         }
+        curl_close ($ch);
+        if(isset($error_msg)){
+            abort(500, $error_msg);
+        }
+
+        return $content;
     }
 
 }
